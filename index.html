@@ -1,1000 +1,884 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoundersHUB - Where Passionate Builders Connect & Grow</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #11141c;
-            color: #EAEAEA;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Neomorphism Colors & Shadows */
-        :root {
-            --bg-color: #11141c;
-            --shadow-light: #1c212e;
-            --shadow-dark: #07090e;
-            --primary-gradient: linear-gradient(135deg, #3BD7FF, #FF4CCF);
-            --form-bg: rgba(255, 255, 255, 0.05);
-            --border-color: rgba(59, 215, 255, 0.1);
-            --text-light: #EAEAEA;
-            --text-faded: #ffffffb3;
-            --accent-color: #3BD7FF;
-        }
-
-        /* Animated background */
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(59, 215, 255, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(255, 76, 207, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 80%, rgba(59, 215, 255, 0.08) 0%, transparent 50%);
-            animation: drift 20s ease-in-out infinite;
-            z-index: -1;
-        }
-
-        @keyframes drift {
-            0%, 100% { transform: translateX(0px) translateY(0px) scale(1); }
-            33% { transform: translateX(30px) translateY(-30px) scale(1.1); }
-            66% { transform: translateX(-20px) translateY(20px) scale(0.9); }
-        }
-
-        /* Grid overlay */
-        .grid-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(59, 215, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59, 215, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
-            animation: grid-pulse 4s ease-in-out infinite;
-        }
-
-        @keyframes grid-pulse {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.1; }
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            position: relative;
-        }
-
-        /* Header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 30px 0;
-            margin-bottom: 60px;
-        }
-
-        .logo {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 26px;
-            font-weight: 800;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .early-access-btn {
-            background: var(--bg-color);
-            border: 1px solid var(--border-color);
-            color: var(--accent-color);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
-        }
-
-        .early-access-btn:hover {
-            transform: translateY(-2px);
-            background: rgba(59, 215, 255, 0.1);
-        }
-
-        /* Hero section */
-        .hero-section {
-            text-align: center;
-            margin-bottom: 100px;
-        }
-
-        .hero-title {
-            font-size: clamp(48px, 8vw, 72px);
-            font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: title-glow 4s ease-in-out infinite;
-            text-shadow: 0 0 25px rgba(59, 215, 255, 0.4);
-        }
-
-        @keyframes title-glow {
-            0%, 100% { text-shadow: 0 0 20px rgba(59, 215, 255, 0.3); }
-            50% { text-shadow: 0 0 30px rgba(255, 76, 207, 0.4); }
-        }
-
-        .hero-subtitle {
-            font-size: 18px;
-            line-height: 1.6;
-            color: var(--text-light);
-            opacity: 0.9;
-            margin-bottom: 20px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-platforms {
-            font-size: 16px;
-            color: var(--accent-color);
-            margin-bottom: 40px;
-            opacity: 0.7;
-        }
-
-        .hero-description {
-            font-size: 16px;
-            line-height: 1.6;
-            color: var(--text-light);
-            opacity: 0.7;
-            max-width: 700px;
-            margin: 0 auto 60px;
-        }
-
-        /* Progress section */
-        .progress-section {
-            background: var(--bg-color);
-            border: 1px solid rgba(59, 215, 255, 0.1);
-            padding: 40px;
-            border-radius: 30px;
-            backdrop-filter: blur(20px);
-            margin-bottom: 100px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light);
-        }
-
-        .progress-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-color), #FF4CCF, transparent);
-            animation: border-flow 3s linear infinite;
-        }
-
-        @keyframes border-flow {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .progress-title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-light);
-            margin-bottom: 30px;
-        }
-
-        .rocket-icon {
-            font-size: 28px;
-        }
-
-        .progress-stats {
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            margin-bottom: 30px;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 42px;
-            font-weight: 900;
-            color: var(--accent-color);
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: var(--text-faded);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 500;
-        }
-
-        .progress-bar-container {
-            margin-bottom: 20px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background: var(--shadow-dark);
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 12px;
-            box-shadow: inset 2px 2px 5px var(--shadow-dark), inset -2px -2px 5px var(--shadow-light);
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--primary-gradient);
-            width: 47%;
-            border-radius: 5px;
-            transition: width 1s ease-in-out;
-            animation: progress-fill-animation 3s ease-in-out infinite;
-        }
-
-        @keyframes progress-fill-animation {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.2); }
-        }
-
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-        }
-
-        .progress-label {
-            color: var(--text-faded);
-        }
-
-        .progress-percentage {
-            color: var(--accent-color);
-            font-weight: 600;
-        }
-
-        /* Benefits section */
-        .benefits-section {
-            margin-bottom: 100px;
-        }
-
-        .benefits-title {
-            font-size: 38px;
-            font-weight: 800;
-            text-align: center;
-            margin-bottom: 60px;
-            background: linear-gradient(135deg, var(--text-light), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 80px;
-        }
-
-        .benefit-card {
-            background: var(--bg-color);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
-        }
-
-        .benefit-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light);
-            border: 1px solid rgba(59, 215, 255, 0.2);
-        }
-
-        .benefit-icon {
-            font-size: 36px;
-            margin-bottom: 16px;
-            display: block;
-            color: var(--accent-color);
-        }
-
-        .benefit-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-light);
-            margin-bottom: 8px;
-        }
-        
-        .benefit-card:nth-child(2) .benefit-icon { color: #FF4CCF; }
-
-        /* Features section */
-        .features-section {
-            margin-bottom: 100px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            background: var(--bg-color);
-            border-radius: 20px;
-            padding: 30px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light);
-            border: 1px solid rgba(59, 215, 255, 0.2);
-        }
-
-        .feature-icon {
-            width: 55px;
-            height: 55px;
-            background: var(--primary-gradient);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            margin-bottom: 20px;
-            box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.2), inset -3px -3px 6px rgba(255, 255, 255, 0.1);
-        }
-
-        .feature-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-light);
-            margin-bottom: 12px;
-        }
-
-        .feature-description {
-            font-size: 15px;
-            color: var(--text-faded);
-            line-height: 1.5;
-        }
-
-        /* CTA section */
-        .cta-section {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .cta-title {
-            font-size: 40px;
-            font-weight: 800;
-            margin-bottom: 16px;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .cta-subtitle {
-            font-size: 18px;
-            color: var(--text-faded);
-            margin-bottom: 40px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .waitlist-form-container {
-            background: var(--bg-color);
-            border-radius: 30px;
-            padding: 50px;
-            backdrop-filter: blur(20px);
-            box-shadow: 15px 15px 30px var(--shadow-dark), -15px -15px 30px var(--shadow-light);
-            max-width: 550px;
-            margin: 0 auto;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-        }
-
-        .waitlist-form-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-color), #FF4CCF, transparent);
-            animation: border-flow 3s linear infinite;
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-            text-align: left;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 12px;
-            font-weight: 600;
-            font-size: 15px;
-            color: var(--accent-color);
-            text-shadow: 0 0 5px rgba(59, 215, 255, 0.2);
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 18px 24px;
-            background: var(--bg-color);
-            border: none;
-            border-radius: 15px;
-            font-size: 16px;
-            color: var(--text-light);
-            transition: all 0.3s ease;
-            box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
-        }
-
-        .form-input:focus {
-            outline: none;
-            box-shadow: inset 2px 2px 5px var(--shadow-dark), inset -2px -2px 5px var(--shadow-light), 0 0 15px rgba(59, 215, 255, 0.3);
-        }
-
-        .form-input::placeholder {
-            color: rgba(234, 234, 234, 0.4);
-        }
-
-        .submit-btn {
-            width: 100%;
-            background: var(--primary-gradient);
-            color: var(--bg-color);
-            border: none;
-            padding: 20px 32px;
-            border-radius: 15px;
-            font-size: 17px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 10px 10px 30px rgba(59, 215, 255, 0.4), -10px -10px 30px rgba(255, 76, 207, 0.4);
-        }
-        
-        .form-content {
-            display: block;
-            transition: opacity 0.5s ease;
-        }
-
-        .success-message {
-            background: var(--bg-color);
-            border: 1px solid rgba(59, 215, 255, 0.3);
-            color: var(--accent-color);
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 18px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 90%;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-            box-shadow: 8px 8px 20px var(--shadow-dark), -8px -8px 20px var(--shadow-light);
-        }
-        
-        .success-message.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                margin-bottom: 40px;
-                padding: 20px 0;
-            }
-            
-            .hero-title {
-                font-size: clamp(40px, 10vw, 60px);
-            }
-            
-            .progress-stats {
-                gap: 30px;
-            }
-            
-            .stat-number {
-                font-size: 32px;
-            }
-            
-            .benefits-grid,
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .waitlist-form-container {
-                padding: 40px 25px;
-                margin: 0 10px;
-            }
-        }
-
-        /* Floating particles */
-        .particle {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background: #3BD7FF;
-            border-radius: 50%;
-            opacity: 0.6;
-            animation: float-particle 6s ease-in-out infinite;
-            filter: blur(2px);
-        }
-
-        .particle:nth-child(2) {
-            animation-delay: -2s;
-            background: #FF4CCF;
-        }
-
-        .particle:nth-child(3) {
-            animation-delay: -4s;
-        }
-
-        @keyframes float-particle {
-            0%, 100% {
-                transform: translateY(0px) translateX(0px);
-                opacity: 0;
-            }
-            10%, 90% {
-                opacity: 0.6;
-            }
-            50% {
-                transform: translateY(-100px) translateX(50px);
-                opacity: 1;
-            }
-        }
-
-        /* Modal Pop-up Styles */
-        .modal-backdrop {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoundersHUB - Where Passionate Builders Connect & Grow</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #11141c;
+            color: #EAEAEA;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Neomorphism Colors & Shadows */
+        :root {
+            --bg-color: #11141c;
+            --shadow-light: #1c212e;
+            --shadow-dark: #07090e;
+            --primary-gradient: linear-gradient(135deg, #3BD7FF, #FF4CCF);
+            --form-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(59, 215, 255, 0.1);
+            --text-light: #EAEAEA;
+            --text-faded: #ffffffb3;
+            --accent-color: #3BD7FF;
+        }
+
+        /* Animated background */
+        .background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(15px);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
+            background: radial-gradient(circle at 20% 50%, rgba(59, 215, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 76, 207, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(59, 215, 255, 0.08) 0%, transparent 50%);
+            animation: drift 20s ease-in-out infinite;
+            z-index: -1;
         }
 
-        .modal-backdrop.visible {
-            opacity: 1;
-            visibility: visible;
+        @keyframes drift {
+            0%, 100% { transform: translateX(0px) translateY(0px) scale(1); }
+            33% { transform: translateX(30px) translateY(-30px) scale(1.1); }
+            66% { transform: translateX(-20px) translateY(20px) scale(0.9); }
         }
 
-        .modal-content {
-            background: var(--bg-color);
-            padding: 50px;
-            border-radius: 30px;
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
+        /* Grid overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(59, 215, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 215, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            animation: grid-pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes grid-pulse {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.1; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             position: relative;
-            box-shadow: 20px 20px 50px var(--shadow-dark), -20px -20px 50px var(--shadow-light);
-            border: 1px solid var(--border-color);
-            transform: scale(0.8);
-            opacity: 0;
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.5s ease;
-        }
-        
-        .modal-backdrop.visible .modal-content {
-            transform: scale(1);
-            opacity: 1;
         }
 
-        .modal-icon {
-            font-size: 80px;
-            margin-bottom: 25px;
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 0;
+            margin-bottom: 60px;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 26px;
+            font-weight: 800;
             background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            display: inline-block;
-            animation: pulse-glow 2s infinite ease-in-out;
-            text-shadow: 0 0 30px rgba(59, 215, 255, 0.6);
+        }
+
+        .early-access-btn {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--accent-color);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+        }
+
+        .early-access-btn:hover {
+            transform: translateY(-2px);
+            background: rgba(59, 215, 255, 0.1);
+        }
+
+        /* Hero section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 8vw, 72px);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: title-glow 4s ease-in-out infinite;
+            text-shadow: 0 0 25px rgba(59, 215, 255, 0.4);
+        }
+
+        @keyframes title-glow {
+            0%, 100% { text-shadow: 0 0 20px rgba(59, 215, 255, 0.3); }
+            50% { text-shadow: 0 0 30px rgba(255, 76, 207, 0.4); }
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--text-light);
+            opacity: 0.9;
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-platforms {
+            font-size: 16px;
+            color: var(--accent-color);
+            margin-bottom: 40px;
+            opacity: 0.7;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-light);
+            opacity: 0.7;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        /* Progress section */
+        .progress-section {
+            background: var(--bg-color);
+            border: 1px solid rgba(59, 215, 255, 0.1);
+            padding: 40px;
+            border-radius: 30px;
+            backdrop-filter: blur(20px);
+            margin-bottom: 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light);
+        }
+
+        .progress-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), #FF4CCF, transparent);
+            animation: border-flow 3s linear infinite;
+        }
+
+        @keyframes border-flow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .rocket-icon {
+            font-size: 28px;
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-bottom: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--accent-color);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-faded);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .progress-bar-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: var(--shadow-dark);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 12px;
+            box-shadow: inset 2px 2px 5px var(--shadow-dark), inset -2px -2px 5px var(--shadow-light);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-gradient);
+            width: 47%;
+            border-radius: 5px;
+            transition: width 1s ease-in-out;
+            animation: progress-fill-animation 3s ease-in-out infinite;
+        }
+
+        @keyframes progress-fill-animation {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .progress-label {
+            color: var(--text-faded);
+        }
+
+        .progress-percentage {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* Benefits section */
+        .benefits-section {
+            margin-bottom: 100px;
+        }
+
+        .benefits-title {
+            font-size: 38px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, var(--text-light), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .benefit-card {
+            background: var(--bg-color);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light);
+            border: 1px solid rgba(59, 215, 255, 0.2);
+        }
+
+        .benefit-icon {
+            font-size: 36px;
+            margin-bottom: 16px;
+            display: block;
+            color: var(--accent-color);
+        }
+
+        .benefit-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 8px;
         }
         
-        .modal-icon.globe {
-            animation: spin 5s linear infinite;
+        .benefit-card:nth-child(2) .benefit-icon { color: #FF4CCF; }
+
+        /* Features section */
+        .features-section {
+            margin-bottom: 100px;
         }
 
-        @keyframes pulse-glow {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.9; }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
 
-        @keyframes spin {
-            0% { transform: rotateY(0deg); }
-            100% { transform: rotateY(360deg); }
+        .feature-card {
+            background: var(--bg-color);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
         }
 
-        .modal-title {
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 15px;
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light);
+            border: 1px solid rgba(59, 215, 255, 0.2);
+        }
+
+        .feature-icon {
+            width: 55px;
+            height: 55px;
+            background: var(--primary-gradient);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.2), inset -3px -3px 6px rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-title {
+            font-size: 22px;
+            font-weight: 700;
             color: var(--text-light);
+            margin-bottom: 12px;
         }
 
-        .modal-subtitle {
+        .feature-description {
+            font-size: 15px;
+            color: var(--text-faded);
+            line-height: 1.5;
+        }
+
+        /* CTA section */
+        .cta-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .cta-title {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-subtitle {
             font-size: 18px;
             color: var(--text-faded);
-            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .waitlist-form-container {
+            background: var(--bg-color);
+            border-radius: 30px;
+            padding: 50px;
+            backdrop-filter: blur(20px);
+            box-shadow: 15px 15px 30px var(--shadow-dark), -15px -15px 30px var(--shadow-light);
+            max-width: 550px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .waitlist-form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), #FF4CCF, transparent);
+            animation: border-flow 3s linear infinite;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--accent-color);
+            text-shadow: 0 0 5px rgba(59, 215, 255, 0.2);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 18px 24px;
+            background: var(--bg-color);
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+        }
+
+        .form-input:focus {
+            outline: none;
+            box-shadow: inset 2px 2px 5px var(--shadow-dark), inset -2px -2px 5px var(--shadow-light), 0 0 15px rgba(59, 215, 255, 0.3);
+        }
+
+        .form-input::placeholder {
+            color: rgba(234, 234, 234, 0.4);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--primary-gradient);
+            color: var(--bg-color);
+            border: none;
+            padding: 20px 32px;
+            border-radius: 15px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 10px 10px 30px rgba(59, 215, 255, 0.4), -10px -10px 30px rgba(255, 76, 207, 0.4);
         }
         
-        .modal-closing-animation {
-            animation: modal-exit-animation 0.5s forwards cubic-bezier(0.6, -0.28, 0.74, 0.05);
+        .form-content {
+            display: block;
+            transition: opacity 0.5s ease;
+        }
+
+        .success-message {
+            background: var(--bg-color);
+            border: 1px solid rgba(59, 215, 255, 0.3);
+            color: var(--accent-color);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 18px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 90%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            box-shadow: 8px 8px 20px var(--shadow-dark), -8px -8px 20px var(--shadow-light);
         }
         
-        @keyframes modal-exit-animation {
-            to {
-                transform: scale(0.7) translateY(50px);
-                opacity: 0;
+        .success-message.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                margin-bottom: 40px;
+                padding: 20px 0;
+            }
+            
+            .hero-title {
+                font-size: clamp(40px, 10vw, 60px);
+            }
+            
+            .progress-stats {
+                gap: 30px;
+            }
+            
+            .stat-number {
+                font-size: 32px;
+            }
+            
+            .benefits-grid,
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .waitlist-form-container {
+                padding: 40px 25px;
+                margin: 0 10px;
             }
         }
 
-    </style>
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #3BD7FF;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float-particle 6s ease-in-out infinite;
+            filter: blur(2px);
+        }
+
+        .particle:nth-child(2) {
+            animation-delay: -2s;
+            background: #FF4CCF;
+        }
+
+        .particle:nth-child(3) {
+            animation-delay: -4s;
+        }
+
+        @keyframes float-particle {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px);
+                opacity: 0;
+            }
+            10%, 90% {
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-100px) translateX(50px);
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="background"></div>
-    <div class="grid-overlay"></div>
-    
-    <div class="particle" style="top: 20%; left: 10%;"></div>
-    <div class="particle" style="top: 60%; right: 15%;"></div>
-    <div class="particle" style="top: 80%; left: 20%;"></div>
+    <div class="background"></div>
+    <div class="grid-overlay"></div>
+    
+    <div class="particle" style="top: 20%; left: 10%;"></div>
+    <div class="particle" style="top: 60%; right: 15%;"></div>
+    <div class="particle" style="top: 80%; left: 20%;"></div>
 
-    <div class="container">
-        <header class="header">
-            <div class="logo">FoundersHUB</div>
-            <a href="#waitlist" class="early-access-btn">Early Access</a>
-        </header>
+    <div class="container">
+        <header class="header">
+            <div class="logo">FoundersHUB</div>
+            <a href="#waitlist" class="early-access-btn">Early Access</a>
+        </header>
 
-        <section class="hero-section">
-            <h1 class="hero-title">Where Passionate<br>Builders Connect & Grow</h1>
-            <p class="hero-subtitle">The specialized space for entrepreneurs, solopreneurs & SaaS builders</p>
-            <p class="hero-platforms">Reddit + ProductHunt + IndieHackers + X = FoundersHUB</p>
-            <p class="hero-description">
-                Track progress, build momentum, and ship publicly in the community built 
-                specifically for driven founders who refuse to build in silence.
-            </p>
-        </section>
+        <section class="hero-section">
+            <h1 class="hero-title">Where Passionate<br>Builders Connect & Grow</h1>
+            <p class="hero-subtitle">The specialized space for entrepreneurs, solopreneurs & SaaS builders</p>
+            <p class="hero-platforms">Reddit + ProductHunt + IndieHackers + X = FoundersHUB</p>
+            <p class="hero-description">
+                Track progress, build momentum, and ship publicly in the community built 
+                specifically for driven founders who refuse to build in silence.
+            </p>
+        </section>
 
-        <section class="progress-section">
-            <div class="progress-title">
-                <span class="rocket-icon">🚀</span>
-                Founding Members Progress
-            </div>
-            <div class="progress-stats">
-                <div class="stat-item">
-                    <span class="stat-number" id="joinedCount">47</span>
-                    <span class="stat-label">Joined</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">100</span>
-                    <span class="stat-label">Target</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number" id="spotsLeft">53</span>
-                    <span class="stat-label">Spots Left</span>
-                </div>
-            </div>
-            <div class="progress-bar-container">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <div class="progress-info">
-                    <span class="progress-label">Founding Members</span>
-                    <span class="progress-percentage" id="progressPercent">47%</span>
-                </div>
-            </div>
-        </section>
+        <section class="progress-section">
+            <div class="progress-title">
+                <span class="rocket-icon">🚀</span>
+                Founding Members Progress
+            </div>
+            <div class="progress-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="joinedCount">47</span>
+                    <span class="stat-label">Joined</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100</span>
+                    <span class="stat-label">Target</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="spotsLeft">53</span>
+                    <span class="stat-label">Spots Left</span>
+                </div>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-info">
+                    <span class="progress-label">Founding Members</span>
+                    <span class="progress-percentage" id="progressPercent">47%</span>
+                </div>
+            </div>
+        </section>
 
-        <section class="benefits-section">
-            <h2 class="benefits-title">Founding Member Benefits</h2>
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <span class="benefit-icon">🏆</span>
-                    <div class="benefit-title">Founding Member Badge</div>
-                </div>
-                <div class="benefit-card">
-                    <span class="benefit-icon">💎</span>
-                    <div class="benefit-title">Lifetime Premium Access</div>
-                </div>
-                <div class="benefit-card">
-                    <span class="benefit-icon">🚀</span>
-                    <div class="benefit-title">Priority Dashboard Access</div>
-                </div>
-                <div class="benefit-card">
-                    <span class="benefit-icon">💬</span>
-                    <div class="benefit-title">Direct Founder Network</div>
-                </div>
-            </div>
-        </section>
+        <section class="benefits-section">
+            <h2 class="benefits-title">Founding Member Benefits</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <span class="benefit-icon">🏆</span>
+                    <div class="benefit-title">Founding Member Badge</div>
+                </div>
+                <div class="benefit-card">
+                    <span class="benefit-icon">💎</span>
+                    <div class="benefit-title">Lifetime Premium Access</div>
+                </div>
+                <div class="benefit-card">
+                    <span class="benefit-icon">🚀</span>
+                    <div class="benefit-title">Priority Dashboard Access</div>
+                </div>
+                <div class="benefit-card">
+                    <span class="benefit-icon">💬</span>
+                    <div class="benefit-title">Direct Founder Network</div>
+                </div>
+            </div>
+        </section>
 
-        <section class="features-section">
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <div class="feature-title">Public Progress Logs</div>
-                    <div class="feature-description">Track milestones, daily wins, and startup journey in one focused dashboard that's yours to own.</div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <div class="feature-title">XP & Streak System</div>
-                    <div class="feature-description">Gamified motivation with daily XP, streaks, and visible momentum to keep you building consistently.</div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <div class="feature-title">Shareable Startup Card</div>
-                    <div class="feature-description">Your professional founder profile with metrics, milestones, and momentum in one beautiful card.</div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">👥</div>
-                    <div class="feature-title">Community & Networking</div>
-                    <div class="feature-description">Connect with like-minded entrepreneurs, share insights, and build meaningful relationships.</div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <div class="feature-title">Product Showcases</div>
-                    <div class="feature-description">Launch your products to a community that gets it. Get feedback from fellow builders who've been there.</div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🤝</div>
-                    <div class="feature-title">Co-founder Matching</div>
-                    <div class="feature-description">Find your perfect co-founder or collaborator based on skills, vision, and building momentum.</div>
-                </div>
-            </div>
-        </section>
+        <section class="features-section">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">Public Progress Logs</div>
+                    <div class="feature-description">Track milestones, daily wins, and startup journey in one focused dashboard that's yours to own.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">XP & Streak System</div>
+                    <div class="feature-description">Gamified motivation with daily XP, streaks, and visible momentum to keep you building consistently.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">Shareable Startup Card</div>
+                    <div class="feature-description">Your professional founder profile with metrics, milestones, and momentum in one beautiful card.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <div class="feature-title">Community & Networking</div>
+                    <div class="feature-description">Connect with like-minded entrepreneurs, share insights, and build meaningful relationships.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <div class="feature-title">Product Showcases</div>
+                    <div class="feature-description">Launch your products to a community that gets it. Get feedback from fellow builders who've been there.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <div class="feature-title">Co-founder Matching</div>
+                    <div class="feature-description">Find your perfect co-founder or collaborator based on skills, vision, and building momentum.</div>
+                </div>
+            </div>
+        </section>
 
-        <section class="cta-section" id="waitlist">
-            <h2 class="cta-title">Join the Waitlist to become Founding Members</h2>
-            <p class="cta-subtitle">
-                Be part of the exclusive community where passionate builders turn 
-                ideas into reality, together.
-            </p>
-            
-            <div class="waitlist-form-container">
-                <form id="waitlistForm" class="form-content">
-                    <div class="form-group">
-                        <label class="form-label" for="name">Full Name</label>
-                        <input 
-                            type="text" 
-                            id="name" 
-                            name="name" 
-                            class="form-input" 
-                            placeholder="Your name"
-                            required
-                        >
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="email">Email Address</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            class="form-input" 
-                            placeholder="founder@startup.com"
-                            required
-                        >
-                    </div>
-                    
-                    <button type="submit" class="submit-btn" id="submitBtn">
-                        Claim My Founding Spot
-                    </button>
-                </form>
-                
-                <div class="success-message" id="successMessage">
-                    🎉 Welcome to the Founding Members Waitlist! We'll notify you with exclusive early access when we launch.
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <div class="modal-backdrop" id="foundersHubModal">
-        <div class="modal-content">
-            <div class="modal-icon globe">🌍</div>
-            <h3 class="modal-title">Welcome to the HUB!</h3>
-            <p class="modal-subtitle">You've successfully claimed your spot. We are preparing your exclusive founder's dashboard.</p>
-        </div>
+        <section class="cta-section" id="waitlist">
+            <h2 class="cta-title">Join the Waitlist to become Founding Members</h2>
+            <p class="cta-subtitle">
+                Be part of the exclusive community where passionate builders turn 
+                ideas into reality, together.
+            </p>
+            
+            <div class="waitlist-form-container">
+                <form id="waitlistForm" class="form-content">
+                    <div class="form-group">
+                        <label class="form-label" for="name">Full Name</label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            class="form-input" 
+                            placeholder="Your name"
+                            required
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-input" 
+                            placeholder="founder@startup.com"
+                            required
+                        >
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        Claim My Founding Spot
+                    </button>
+                </form>
+                
+                <div class="success-message" id="successMessage">
+                    🎉 Welcome to the Founding Members Waitlist! We'll notify you with exclusive early access when we launch.
+                </div>
+            </div>
+        </section>
     </div>
 
-    <script>
-        // Google Sheets integration
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCK5oLciAg-n3fc00t6yIGhehbkUxa0TMMj77c4fu8MRaWlnfylazPNgWkz4NylS7s4A/exec';
-        
-        const form = document.getElementById('waitlistForm');
-        const formContent = document.querySelector('.form-content');
-        const submitBtn = document.getElementById('submitBtn');
-        const successMessage = document.getElementById('successMessage');
-        const modal = document.getElementById('foundersHubModal');
-        const modalContent = modal.querySelector('.modal-content');
-        
-        // Animate counters on load
-        function animateCounters() {
-            const joinedElement = document.getElementById('joinedCount');
-            const spotsLeftElement = document.getElementById('spotsLeft');
-            const progressFill = document.getElementById('progressFill');
-            const progressPercent = document.getElementById('progressPercent');
-            
-            let joined = 0;
-            const targetJoined = 47;
-            const increment = targetJoined / 50;
-            
-            const timer = setInterval(() => {
-                joined += increment;
-                if (joined >= targetJoined) {
-                    joinedElement.textContent = targetJoined;
-                    spotsLeftElement.textContent = 100 - targetJoined;
-                    progressFill.style.width = targetJoined + '%';
-                    progressPercent.textContent = targetJoined + '%';
-                    clearInterval(timer);
-                } else {
-                    const currentJoined = Math.floor(joined);
-                    joinedElement.textContent = currentJoined;
-                    spotsLeftElement.textContent = 100 - currentJoined;
-                    progressFill.style.width = currentJoined + '%';
-                    progressPercent.textContent = currentJoined + '%';
-                }
-            }, 30);
-        }
-        
-        // Start animations when page loads
-        window.addEventListener('load', animateCounters);
-        
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            
-            if (!name || !email) return;
-            
-            // Show loading state
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Claiming Spot...';
-            
-            const requestData = {
-                name: name,
-                email: email,
-                timestamp: new Date().toISOString(),
-                source: 'FoundersHUB Founding Members'
-            };
-            
-            try {
-                // Send data to Google Sheets
-                await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(requestData)
-                });
-                
-                // Hide form and show success message
-                formContent.style.opacity = '0';
-                setTimeout(() => {
-                    formContent.style.display = 'none';
-                    successMessage.classList.add('active');
-                }, 500); // Wait for opacity transition to finish
-                
-                // Update counters
-                const joinedElement = document.getElementById('joinedCount');
-                const spotsLeftElement = document.getElementById('spotsLeft');
-                const progressFill = document.getElementById('progressFill');
-                const progressPercent = document.getElementById('progressPercent');
-                
-                const newJoined = parseInt(joinedElement.textContent) + 1;
-                joinedElement.textContent = newJoined;
-                spotsLeftElement.textContent = 100 - newJoined;
-                progressFill.style.width = newJoined + '%';
-                progressPercent.textContent = newJoined + '%';
-                
-                // Show the animated modal
-                setTimeout(() => {
-                    modal.classList.add('visible');
-                }, 1500); // Delay before showing the modal
+    <script>
+        // Google Sheets integration
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCK5oLciAg-n3fc00t6yIGhehbkUxa0TMMj77c4fu8MRaWlnfylazPNgWkz4NylS7s4A/exec';
+        
+        const form = document.getElementById('waitlistForm');
+        const formContent = document.querySelector('.form-content');
+        const submitBtn = document.getElementById('submitBtn');
+        const successMessage = document.getElementById('successMessage');
+        
+        // Animate counters on load
+        function animateCounters() {
+            const joinedElement = document.getElementById('joinedCount');
+            const spotsLeftElement = document.getElementById('spotsLeft');
+            const progressFill = document.getElementById('progressFill');
+            const progressPercent = document.getElementById('progressPercent');
+            
+            let joined = 0;
+            const targetJoined = 47;
+            const increment = targetJoined / 50;
+            
+            const timer = setInterval(() => {
+                joined += increment;
+                if (joined >= targetJoined) {
+                    joinedElement.textContent = targetJoined;
+                    spotsLeftElement.textContent = 100 - targetJoined;
+                    progressFill.style.width = targetJoined + '%';
+                    progressPercent.textContent = targetJoined + '%';
+                    clearInterval(timer);
+                } else {
+                    const currentJoined = Math.floor(joined);
+                    joinedElement.textContent = currentJoined;
+                    spotsLeftElement.textContent = 100 - currentJoined;
+                    progressFill.style.width = currentJoined + '%';
+                    progressPercent.textContent = currentJoined + '%';
+                }
+            }, 30);
+        }
+        
+        // Start animations when page loads
+        window.addEventListener('load', animateCounters);
+        
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            
+            if (!name || !email) return;
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Claiming Spot...';
+            
+            const requestData = {
+                name: name,
+                email: email,
+                timestamp: new Date().toISOString(),
+                source: 'FoundersHUB Founding Members'
+            };
+            
+            try {
+                // Send data to Google Sheets
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData)
+                });
                 
-                // Hide the modal after a few seconds
+                // Show success message without hiding the entire form container
                 setTimeout(() => {
-                    modalContent.classList.add('modal-closing-animation');
-                    // Remove the modal from the DOM after the animation completes
-                    modalContent.addEventListener('animationend', () => {
-                        modal.classList.remove('visible');
-                        modalContent.classList.remove('modal-closing-animation');
-                    }, { once: true });
-                }, 5000); // Show for 5 seconds
+                    formContent.style.opacity = '0';
+                    setTimeout(() => {
+                         // Hide the form's content by making it invisible, not changing display property
+                        formContent.style.display = 'none'; 
+                        successMessage.classList.add('active'); // Use a class to manage visibility
+                    }, 500); // Wait for the opacity transition
+                    
+                    // Update counters
+                    const joinedElement = document.getElementById('joinedCount');
+                    const spotsLeftElement = document.getElementById('spotsLeft');
+                    const progressFill = document.getElementById('progressFill');
+                    const progressPercent = document.getElementById('progressPercent');
+                    
+                    const newJoined = parseInt(joinedElement.textContent) + 1;
+                    joinedElement.textContent = newJoined;
+                    spotsLeftElement.textContent = 100 - newJoined;
+                    progressFill.style.width = newJoined + '%';
+                    progressPercent.textContent = newJoined + '%';
+                }, 1500);
                 
-            } catch (error) {
-                console.error('Error submitting form:', error);
-            } finally {
-                // Reset button state
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Claim My Founding Spot';
-            }
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-        
-        // Add subtle mouse tracking effect
-        document.addEventListener('mousemove', (e) => {
-            const particles = document.querySelectorAll('.particle');
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-            
-            particles.forEach((particle, index) => {
-                const speed = (index + 1) * 0.5;
-                const xOffset = (x - 0.5) * speed * 20;
-                const yOffset = (y - 0.5) * speed * 20;
-                
-                particle.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
-            });
-        });
-    </script>
+            } catch (error) {
+                console.error('Error submitting form:', error);
+            } finally {
+                // Reset button state
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Claim My Founding Spot';
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Add subtle mouse tracking effect
+        document.addEventListener('mousemove', (e) => {
+            const particles = document.querySelectorAll('.particle');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            particles.forEach((particle, index) => {
+                const speed = (index + 1) * 0.5;
+                const xOffset = (x - 0.5) * speed * 20;
+                const yOffset = (y - 0.5) * speed * 20;
+                
+                particle.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+        });
+    </script>
 </body>
 </html>
